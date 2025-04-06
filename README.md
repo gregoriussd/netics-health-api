@@ -3,7 +3,7 @@
 
 URL API: http://13.213.49.112/health  
 Screenshot Hasil:  
-
+![](assets/hasil.png)  
 
 
 ## Overview
@@ -143,7 +143,7 @@ Repository akan di clone ke dalam workspace sementara dari CI/CD dengan memanfaa
 ```
 Salin semua file yang ada pada repository ke dalam EC2 dengan memanfaatkan appleboy/scp-action version 0.1.4. Penyalinan ini dilakukan via SSH maka dari itu diperlukan host, username, dan key yang diletakan pada GitHub secrets. File hasil salinan diletakan pada direktory ~/netics-health-api.  
 
-#### 5.Step 3: Jalankan perintah deployment pada EC2
+#### 6.Step 3: Jalankan perintah deployment pada EC2
 ```yaml
     - name: Run deployment commands on EC2
       uses: appleboy/ssh-action@v0.1.10
@@ -158,10 +158,16 @@ Salin semua file yang ada pada repository ke dalam EC2 dengan memanfaatkan apple
           docker run -d -p 80:80 --name netics-api netics-health-api
 ```
 Masuk ke dalam EC2 menggunakan SSH dengan memanfaatkan appleboy/ssh-action version 0.1.10. Kemudian jalankan perintah yang dituliskan pada bagian script. Perintah yang dijalankan yaitu:  
-    1. Masuk ke dalam directory netics-health-api.
-    2. Build docker image dengan menggunakan Dockerfile pada netics-health-api.
-    3. Hapus hentikan dan hapus container terdahulu (jika ada).
-    4. Jalankan container baru sesuai image hasil docker build.
+    1. Masuk ke dalam directory netics-health-api.  
+    2. Build docker image dengan menggunakan Dockerfile pada netics-health-api.  
+    3. Hapus hentikan dan hapus container terdahulu (jika ada).  
+    4. Jalankan container baru sesuai image hasil docker build.  
   
 Jika konfigurasi berhasil maka setiap melakukan push ke dalam repository akan terdapat workflow yang berjalan. Hal ini dapat di cek pada tab Actions pada repository.  
+![](assets/actions-tab.png)  
 
+### Penjelasan GitHub Secrets
+Terdapat 3 GitHub secrets yang digunakan yaitu:
+    1. HOST : berisi hostname alias public IP untuk mengakses VPS  
+    2. USER : berisi username yang digunakan untuk mengakses VPS (menggunakan username default "ubuntu")  
+    3. SSH_KEY : berisi RSA key untuk mengakses VPS menggunakan SSH didapatkan dari keypair yang dibuat pada saat konfigurasi EC2.  
