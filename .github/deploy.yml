@@ -2,30 +2,35 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
+    - name: Checkout repo
       uses: actions/checkout@v3
 
-    - name: Build Docker Image
-      run: docker build -t netics-health-api .
-
-    - name: Deploy via SSH
-      uses: appleboy/ssh-action@v0.1.8
+    - name: Copy files to EC2 via SSH
+      uses: appleboy/scp-action@v0.1.4
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
+        key: ${{ secrets.KEY }}
+        source: "."
+        target: "~/netics-health-api"
+
+    - name: Run deployment commands on EC2
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.KEY }}
         script: |
-          docker stop netics-health-api || true
-          docker rm netics-health-api || true
-          docker rmi netics-health-api || true
-          cd /home/ubuntu/netics-health-api
-          git pull origin main
+          cd ~/netics-health-api
           docker build -t netics-health-api .
-          docker run -d -p 80:80 --name netics-health-api netics-health-api
+          docker stop netics-api || true
+          docker rm netics-api || true
+          docker run -d --name netics-api netics-health-api
