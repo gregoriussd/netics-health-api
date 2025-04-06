@@ -5,6 +5,7 @@ URL API: http://13.213.49.112/health
 Screenshot Hasil:  
 
 
+
 ## Overview
 
 Pada penugasan modul 1 kita diminta untuk mengimplementasikan CI/CD pada sistem server sedarhana. Pada server kita diminta untuk membuat API publik dengan endpoint /health untuk menampilkan informasi sebagai berikut:  
