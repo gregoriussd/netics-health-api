@@ -18,7 +18,7 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.KEY }}
+        key: ${{ secrets.SSH_KEY }}
         source: "."
         target: "~/netics-health-api"
 
@@ -27,7 +27,7 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        key: ${{ secrets.KEY }}
+        key: ${{ secrets.SSH_KEY }}
         script: |
           cd ~/netics-health-api
           docker build -t netics-health-api .
