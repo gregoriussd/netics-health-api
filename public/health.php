@@ -1,15 +1,15 @@
 <?php
-if ($_SERVER['REQUEST_URI'] !== '/health') {
-    http_response_code(404);
-    echo "Not Found";
-    exit;
-}
+// if ($_SERVER['REQUEST_URI'] !== '/health') {
+//     http_response_code(404);
+//     echo "Not Found";
+//     exit;
+// }
 
 header('Content-Type: application/json');
 
 $uptime = shell_exec("awk '{print $1}' /proc/uptime");
 $uptime_seconds = floatval($uptime);
-$uptime_formatted = gmdate("H:i:s", $uptime_seconds);
+$uptime_formatted = gmdate("H:i:s", (int) $uptime_seconds);
 
 echo json_encode([
     "nama" => "Gregorius Setiadharma",
