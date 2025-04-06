@@ -1,9 +1,8 @@
 <?php
-// if ($_SERVER['REQUEST_URI'] !== '/health') {
-//     http_response_code(404);
-//     echo "Not Found";
-//     exit;
-// }
+if ($_SERVER['REQUEST_URI'] !== '/health') {
+    http_response_code(404);
+    exit;
+}
 
 header('Content-Type: application/json');
 
