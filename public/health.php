@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_URI'] !== '/health') {
 header('Content-Type: application/json');
 
 $uptime = shell_exec("awk '{print $1}' /proc/uptime");
-$uptime_formatted = gmdate("H:i:s", (int) $uptime);
+$uptime_formatted = gmdate("Y-m-d H:i:s", (int) $uptime);
 
 echo json_encode([
     "nama" => "Gregorius Setiadharma",
